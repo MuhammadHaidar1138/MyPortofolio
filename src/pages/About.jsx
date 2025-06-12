@@ -1,16 +1,116 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import SplitText from "../components/SplitText";
+import { Renderer, Program, Mesh, Triangle, Color, Camera, Transform, Plane, Texture } from "ogl";
 import ProfileImg from "../assets/image/Profile.png";
 
-// Komponen Squares untuk background grid animasi
+// Threads background component
+const vertexShader = `
+attribute vec2 position;
+attribute vec2 uv;
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 0.0, 1.0);
+}
+`;
+
+const fragmentShader = `
+precision highp float;
+uniform float iTime;
+uniform vec3 iResolution;
+uniform vec3 uColor;
+uniform float uAmplitude;
+uniform float uDistance;
+uniform vec2 uMouse;
+#define PI 3.1415926538
+const int u_line_count = 40;
+const float u_line_width = 7.0;
+const float u_line_blur = 10.0;
+float Perlin2D(vec2 P) {
+    vec2 Pi = floor(P);
+    vec4 Pf_Pfmin1 = P.xyxy - vec4(Pi, Pi + 1.0);
+    vec4 Pt = vec4(Pi.xy, Pi.xy + 1.0);
+    Pt = Pt - floor(Pt * (1.0 / 71.0)) * 71.0;
+    Pt += vec2(26.0, 161.0).xyxy;
+    Pt *= Pt;
+    Pt = Pt.xzxz * Pt.yyww;
+    vec4 hash_x = fract(Pt * (1.0 / 951.135664));
+    vec4 hash_y = fract(Pt * (1.0 / 642.949883));
+    vec4 grad_x = hash_x - 0.49999;
+    vec4 grad_y = hash_y - 0.49999;
+    vec4 grad_results = inversesqrt(grad_x * grad_x + grad_y * grad_y)
+        * (grad_x * Pf_Pfmin1.xzxz + grad_y * Pf_Pfmin1.yyww);
+    grad_results *= 1.4142135623730950;
+    vec2 blend = Pf_Pfmin1.xy * Pf_Pfmin1.xy * Pf_Pfmin1.xy
+               * (Pf_Pfmin1.xy * (Pf_Pfmin1.xy * 6.0 - 15.0) + 10.0);
+    vec4 blend2 = vec4(blend, vec2(1.0 - blend));
+    return dot(grad_results, blend2.zxzx * blend2.wwyy);
+}
+float pixel(float count, vec2 resolution) {
+    return (1.0 / max(resolution.x, resolution.y)) * count;
+}
+float lineFn(vec2 st, float width, float perc, float offset, vec2 mouse, float time, float amplitude, float distance) {
+    float split_offset = (perc * 0.4);
+    float split_point = 0.1 + split_offset;
+    float amplitude_normal = smoothstep(split_point, 0.7, st.x);
+    float amplitude_strength = 0.5;
+    float finalAmplitude = amplitude_normal * amplitude_strength
+                           * amplitude * (1.0 + (mouse.y - 0.5) * 0.2);
+    float time_scaled = time / 10.0 + (mouse.x - 0.5) * 1.0;
+    float blur = smoothstep(split_point, split_point + 0.05, st.x) * perc;
+    float xnoise = mix(
+        Perlin2D(vec2(time_scaled, st.x + perc) * 2.5),
+        Perlin2D(vec2(time_scaled, st.x + time_scaled) * 3.5) / 1.5,
+        st.x * 0.3
+    );
+    float y = 0.5 + (perc - 0.5) * distance + xnoise / 2.0 * finalAmplitude;
+    float line_start = smoothstep(
+        y + (width / 2.0) + (u_line_blur * pixel(1.0, iResolution.xy) * blur),
+        y,
+        st.y
+    );
+    float line_end = smoothstep(
+        y,
+        y - (width / 2.0) - (u_line_blur * pixel(1.0, iResolution.xy) * blur),
+        st.y
+    );
+    return clamp(
+        (line_start - line_end) * (1.0 - smoothstep(0.0, 1.0, pow(perc, 0.3))),
+        0.0,
+        1.0
+    );
+}
+void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+    vec2 uv = fragCoord / iResolution.xy;
+    float line_strength = 1.0;
+    for (int i = 0; i < u_line_count; i++) {
+        float p = float(i) / float(u_line_count);
+        line_strength *= (1.0 - lineFn(
+            uv,
+            u_line_width * pixel(1.0, iResolution.xy) * (1.0 - p),
+            p,
+            (PI * 1.0) * p,
+            uMouse,
+            iTime,
+            uAmplitude,
+            uDistance
+        ));
+    }
+    float colorVal = 1.0 - line_strength;
+    fragColor = vec4(uColor * colorVal, colorVal);
+}
+void main() {
+    mainImage(gl_FragColor, gl_FragCoord.xy);
+}
+`;
+
 const Squares = ({
   direction = "right",
   speed = 1,
-  borderColor = "rgba(34,197,94,0.7)", // glowing lime sesuai tema
+  borderColor = "rgba(34,197,94,0.7)",
   squareSize = 40,
-  hoverFillColor = "#000", // hover hitam saja
+  hoverFillColor = "#000",
 }) => {
   const canvasRef = useRef(null);
   const requestRef = useRef(null);
@@ -25,7 +125,6 @@ const Squares = ({
     const ctx = canvas.getContext("2d");
 
     const resizeCanvas = () => {
-      // Gunakan window.innerWidth/Height agar canvas selalu penuh
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       numSquaresX.current = Math.ceil(canvas.width / squareSize) + 1;
@@ -175,56 +274,73 @@ const Squares = ({
   );
 };
 
-// TrueFocus: animasi border langsung ke seluruh nama (Muhammad Haidar)
+// TrueFocus: animasi border langsung ke seluruh nama (Muhammad Haidar) dengan dua baris
 const TrueFocus = ({
-  sentence = "True Focus",
   blurAmount = 5,
-  borderColor = "green",
-  glowColor = "rgba(0, 255, 0, 0.6)",
+  borderColor = "lime",
+  glowColor = "rgba(34,197,94,0.7)",
   animationDuration = 0.5,
 }) => {
-  const words = sentence.split(" ");
+  // Dua baris: Muhammad (hijau), Haidar (putih)
+  const firstName = "Muhammad";
+  const lastName = "Haidar";
   const containerRef = useRef(null);
   const wordRefs = useRef([]);
   const [focusRect, setFocusRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [show, setShow] = useState(false);
 
-  // Setelah mount, animasikan border ke seluruh nama
   useEffect(() => {
-    if (!containerRef.current || !wordRefs.current[0]) return;
+    if (!containerRef.current || !wordRefs.current[0] || !wordRefs.current[1]) return;
     const parentRect = containerRef.current.getBoundingClientRect();
     const firstRect = wordRefs.current[0].getBoundingClientRect();
-    const lastRect = wordRefs.current[words.length - 1].getBoundingClientRect();
+    const lastRect = wordRefs.current[1].getBoundingClientRect();
+
+    // Ambil area dari atas Muhammad sampai bawah Haidar, dan lebar terlebar
+    const left = Math.min(firstRect.left, lastRect.left);
+    const right = Math.max(firstRect.right, lastRect.right);
     setFocusRect({
-      x: firstRect.left - parentRect.left,
+      x: left - parentRect.left,
       y: firstRect.top - parentRect.top,
-      width: lastRect.right - firstRect.left,
-      height: Math.max(firstRect.height, lastRect.height),
+      width: right - left,
+      height: lastRect.bottom - firstRect.top,
     });
     setShow(true);
-  }, [sentence, words.length]);
+  }, []);
 
   return (
     <div
-      className="relative flex gap-4 justify-center items-center flex-wrap"
+      className="relative flex flex-col items-start"
       ref={containerRef}
     >
-      {words.map((word, index) => (
-        <span
-          key={index}
-          ref={(el) => (wordRefs.current[index] = el)}
-          className="relative text-[2rem] md:text-[2.5rem] font-black cursor-pointer text-green-400"
-          style={{
-            filter: show ? "blur(0px)" : `blur(${blurAmount}px)`,
-            "--border-color": borderColor,
-            "--glow-color": glowColor,
-            transition: `filter ${animationDuration}s ease`,
-          }}
-        >
-          {word}
-        </span>
-      ))}
-
+      <span
+        ref={el => (wordRefs.current[0] = el)}
+        className="relative font-black"
+        style={{
+          color: "rgba(34,197,94,0.7)",
+          fontSize: "3.2rem",
+          lineHeight: 1.1,
+          filter: show ? "blur(0px)" : `blur(${blurAmount}px)`,
+          "--border-color": borderColor,
+          "--glow-color": glowColor,
+          transition: `filter ${animationDuration}s ease`,
+        }}
+      >
+        {firstName}
+      </span>
+      <span
+        ref={el => (wordRefs.current[1] = el)}
+        className="relative text-white font-black"
+        style={{
+          fontSize: "3.2rem",
+          lineHeight: 1.1,
+          filter: show ? "blur(0px)" : `blur(${blurAmount}px)`,
+          "--border-color": borderColor,
+          "--glow-color": glowColor,
+          transition: `filter ${animationDuration}s ease`,
+        }}
+      >
+        {lastName}
+      </span>
       <motion.div
         className="absolute top-0 left-0 pointer-events-none box-border border-0"
         animate={{
@@ -242,6 +358,7 @@ const TrueFocus = ({
           "--glow-color": glowColor,
         }}
       >
+        {/* Keempat sudut hijau */}
         <span
           className="absolute w-4 h-4 border-[3px] rounded-[3px] top-[-10px] left-[-10px] border-r-0 border-b-0"
           style={{
@@ -275,9 +392,7 @@ const TrueFocus = ({
   );
 };
 
-function App() {
-  const navigate = useNavigate();
-
+export default function About() {
   return (
     <div className="min-h-screen flex flex-col justify-between px-4 relative overflow-hidden" style={{ background: "#000" }}>
       {/* Animated background */}
@@ -289,14 +404,14 @@ function App() {
         hoverFillColor="#000"
       />
       {/* Konten utama */}
-      <div className="relative z-10 flex flex-1 items-center justify-center">
-        <div className="flex flex-col md:flex-row items-center md:items-center gap-12 w-full max-w-5xl mx-auto">
+      <div className="relative z-10 flex flex-1 items-center justify-start">
+        <div className="flex flex-col md:flex-row items-center md:items-center gap-12 w-full max-w-5xl mx-auto md:ml-0 ml-0">
           {/* Profile Card */}
           <div className="flex flex-col items-center w-full md:w-auto">
             <motion.div
               initial={{ filter: "blur(18px)" }}
               animate={{ filter: "blur(0px)" }}
-              transition={{ duration: 0.5, ease: "easeOut" }} // durasi lebih cepat
+              transition={{ duration: 0.5, ease: "easeOut" }}
               className="w-72 h-72 rounded-2xl overflow-hidden border-4 border-green-400 bg-neutral-900 flex items-center justify-center shadow-lg"
             >
               <img
@@ -308,7 +423,7 @@ function App() {
             {/* Icon Sosial Media */}
             <div className="flex gap-4 mt-6">
               <a
-                href="mailto:email@domain.com"
+                href="mailto:mhmmdHaidar1138@gmail.com"
                 className="text-green-400 hover:text-green-300 transition"
                 aria-label="Email"
               >
@@ -339,7 +454,7 @@ function App() {
                 </svg>
               </a>
               <a
-                href="https://github.com/username"
+                href="https://github.com/MuhammadHaidar1138"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-400 hover:text-green-300 transition"
@@ -376,10 +491,9 @@ function App() {
           </div>
 
           {/* Konten di kanan */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left w-full">
+          <div className="flex flex-col items-start text-left w-full">
             {/* Nama dengan TrueFocus */}
             <TrueFocus
-              sentence="Muhammad Haidar"
               blurAmount={5}
               borderColor="lime"
               glowColor="rgba(34,197,94,0.7)"
@@ -392,7 +506,7 @@ function App() {
               splitType="words, chars"
               delay={30}
               duration={0.7}
-              textAlign="center"
+              textAlign="left"
             />
             <SplitText
               text="Saya adalah seorang pengembang web yang fokus pada pembuatan UI modern dan interaktif menggunakan React dan Tailwind CSS."
@@ -402,36 +516,9 @@ function App() {
               duration={0.4}
               textAlign="left"
             />
-            {/* Button Next */}
-            <motion.button
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              whileHover={{
-                scale: 1.07,
-                background: "linear-gradient(90deg, #22c55e 0%, #16a34a 100%)",
-                boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)",
-              }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => navigate("/about")}
-              className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-500 to-green-700 text-white font-bold rounded-full shadow-lg transition-all duration-300 outline-none mt-2 focus:ring-4 focus:ring-green-400/40"
-            >
-              Explore
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </motion.button>
           </div>
         </div>
       </div>
-
       {/* Footer di bawah */}
       <footer className="text-green-700 text-sm text-center pb-4 mt-8 relative z-10">
         &copy; {new Date().getFullYear()} Haidar. All rights reserved.
@@ -439,5 +526,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
