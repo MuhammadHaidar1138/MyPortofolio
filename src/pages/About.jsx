@@ -392,6 +392,15 @@ const TrueFocus = ({
   );
 };
 
+const SkillItem = ({ icon, label }) => {
+  return (
+    <div className="flex flex-col items-center text-center">
+      <div className="w-16 h-16 mb-2">{icon}</div>
+      <span className="text-sm font-medium text-white">{label}</span>
+    </div>
+  );
+};
+
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col justify-between px-4 relative overflow-hidden" style={{ background: "#000" }}>
@@ -404,9 +413,9 @@ export default function About() {
         hoverFillColor="#000"
       />
       {/* Konten utama */}
-      <div className="relative z-10 flex flex-1 items-center justify-start">
+      <div className="relative z-10 flex items-center justify-start min-h-[80vh]">
         <div className="flex flex-col md:flex-row items-center md:items-center gap-12 w-full max-w-5xl mx-auto md:ml-0 ml-0">
-          {/* Profile Card */}
+          {/* Profile Card dan Konten Kanan */}
           <div className="flex flex-col items-center w-full md:w-auto">
             <motion.div
               initial={{ filter: "blur(18px)" }}
@@ -423,7 +432,7 @@ export default function About() {
             {/* Icon Sosial Media */}
             <div className="flex gap-4 mt-6">
               <a
-                href="mailto:mhmmdHaidar1138@gmail.com"
+                href="https://mail.google.com/mail/u/0/?view=cm&tf=1&fs=1&to=mhmmdHaidar1138@gmail.com"
                 className="text-green-400 hover:text-green-300 transition"
                 aria-label="Email"
               >
@@ -519,6 +528,244 @@ export default function About() {
           </div>
         </div>
       </div>
+      {/* Spacer agar skill card lebih ke bawah */}
+      <div className="h-16 md:h-24"></div>
+      {/* Card Skill Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative z-10 flex justify-center mt-10"
+      >
+        <div className="bg-neutral-900/90 border-4 border-green-400 rounded-3xl shadow-2xl px-12 py-12 flex flex-col items-center max-w-5xl w-full">
+          <h2 className="text-green-400 text-2xl font-bold mb-8 text-center tracking-wide">My Skills</h2>
+          <div className="grid grid-cols-4 grid-rows-2 gap-10 w-full justify-items-center">
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#E44D26" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128"/><path fill="#F16529" d="M64 117.2l35.1-9.7 9.2-103.2H64"/><path fill="#EBEBEB" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z"/><path fill="#FFF" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z"/></svg>
+              }
+              label="HTML"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#1572B6" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128"/><path fill="#33A9DC" d="M64 117.2l35.1-9.7 9.2-103.2H64"/><path fill="#fff" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z"/><path fill="#EBEBEB" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z"/></svg>
+              }
+              label="CSS"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#777BB4" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+              }
+              label="PHP"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#F55247" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+              }
+              label="Laravel"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"/><path d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><ellipse cx="64" cy="64" rx="56" ry="22" fill="none" stroke="#61DAFB" strokeWidth="8"/><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(60 64 64)"/><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(120 64 64)"/></g></svg>
+              }
+              label="ReactJS"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><circle cx="64" cy="64" r="56" fill="#f5c518"/><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#222">Lu</text></svg>
+              }
+              label="Lumen"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#38BDF8"/><path d="M32 96l32-64 32 64H32z" fill="#fff"/></svg>
+              }
+              label="Tailwind"
+            />
+            <SkillItem
+              icon={
+                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#7952B3"/><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#fff">B</text></svg>
+              }
+              label="Bootstrap"
+            />
+          </div>
+        </div>
+      </motion.div>
+      {/* Section Pendidikan */}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative z-10 flex justify-center mt-20"
+      >
+        <div className="w-full max-w-4xl px-4">
+          <h2 className="text-green-400 text-2xl font-bold mb-10 text-center tracking-wide">
+            Pendidikan
+          </h2>
+          <div className="flex flex-col gap-8">
+            {/* SD */}
+            <div className="flex items-center group">
+              <div className="flex flex-col items-center mr-6">
+                <div className="w-6 h-6 rounded-full bg-green-400 border-4 border-neutral-900 shadow-lg group-hover:scale-110 transition" />
+                <div className="w-1 h-20 bg-gradient-to-b from-green-400 to-transparent" />
+              </div>
+              <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
+                <h3 className="text-lg font-bold text-green-300 mb-1">SDN 1 Contoh</h3>
+                <p className="text-green-100 text-sm mb-1">2012 - 2018</p>
+                <p className="text-white text-base">Belajar dasar-dasar ilmu pengetahuan dan membangun karakter.</p>
+              </div>
+            </div>
+            {/* SMP */}
+            <div className="flex items-center group">
+              <div className="flex flex-col items-center mr-6">
+                <div className="w-6 h-6 rounded-full bg-green-400 border-4 border-neutral-900 shadow-lg group-hover:scale-110 transition" />
+                <div className="w-1 h-20 bg-gradient-to-b from-green-400 to-transparent" />
+              </div>
+              <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
+                <h3 className="text-lg font-bold text-green-300 mb-1">SMPN 2 Contoh</h3>
+                <p className="text-green-100 text-sm mb-1">2018 - 2021</p>
+                <p className="text-white text-base">Mengembangkan minat di bidang teknologi dan organisasi sekolah.</p>
+              </div>
+            </div>
+            {/* SMK */}
+            <div className="flex items-center group">
+              <div className="flex flex-col items-center mr-6">
+                <div className="w-6 h-6 rounded-full bg-green-400 border-4 border-neutral-900 shadow-lg group-hover:scale-110 transition" />
+                {/* Tidak ada garis bawah untuk terakhir */}
+              </div>
+              <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
+                <h3 className="text-lg font-bold text-green-300 mb-1">SMK Negeri 1 Contoh</h3>
+                <p className="text-green-100 text-sm mb-1">2021 - Sekarang</p>
+                <p className="text-white text-base">Fokus di Rekayasa Perangkat Lunak, aktif di project dan lomba IT.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+      {/* Section Sertifikat */}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative z-10 flex justify-center mt-20"
+      >
+        <div className="w-full max-w-5xl px-4">
+          <h2 className="text-green-400 text-2xl font-bold mb-10 text-center tracking-wide">
+            Sertifikat
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Sertifikat Card 1 */}
+            <motion.div
+              whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+                alt="Sertifikat 1"
+                className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
+              />
+              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">React Developer</h3>
+              <p className="text-green-100 text-sm mb-2 text-center">Dicoding Indonesia</p>
+              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2024</span>
+            </motion.div>
+            {/* Sertifikat Card 2 */}
+            <motion.div
+              whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80"
+                alt="Sertifikat 2"
+                className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
+              />
+              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">UI/UX Design</h3>
+              <p className="text-green-100 text-sm mb-2 text-center">Progate</p>
+              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2023</span>
+            </motion.div>
+            {/* Sertifikat Card 3 */}
+            <motion.div
+              whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+                alt="Sertifikat 3"
+                className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
+              />
+              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">Web Fundamental</h3>
+              <p className="text-green-100 text-sm mb-2 text-center">FreeCodeCamp</p>
+              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2022</span>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Section Project */}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative z-10 flex justify-center mt-20"
+      >
+        <div className="w-full max-w-5xl px-4">
+          <h2 className="text-green-400 text-2xl font-bold mb-10 text-center tracking-wide">
+            Project
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Project Card 1 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80"
+                alt="Project 1"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Portofolio Website</h3>
+                <p className="text-green-100 text-sm mb-2">Website portofolio interaktif dengan React dan Tailwind CSS.</p>
+                <a
+                  href="https://github.com/MuhammadHaidar1138"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  Lihat Project
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 2 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+                alt="Project 2"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Aplikasi Kasir</h3>
+                <p className="text-green-100 text-sm mb-2">Aplikasi kasir berbasis web dengan fitur laporan dan manajemen produk.</p>
+                <a
+                  href="https://github.com/MuhammadHaidar1138"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  Lihat Project
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Footer di bawah */}
       <footer className="text-green-700 text-sm text-center pb-4 mt-8 relative z-10">
         &copy; {new Date().getFullYear()} Haidar. All rights reserved.
