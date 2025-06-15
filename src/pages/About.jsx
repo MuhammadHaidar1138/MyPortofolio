@@ -3,6 +3,17 @@ import { motion } from "framer-motion";
 import SplitText from "../components/SplitText";
 import { Renderer, Program, Mesh, Triangle, Color, Camera, Transform, Plane, Texture } from "ogl";
 import ProfileImg from "../assets/image/Profile.png";
+import BahanBakarImg from "../assets/image/Bahan Bakar.png";
+import DataSiswaImg from "../assets/image/Data Siswa.png";
+import KalkulatorImg from "../assets/image/Kalkulator sederhana.png";
+import KasirImg from "../assets/image/Kasir.png";
+import RentalMotorImg from "../assets/image/Rental Motor.png";
+import WebshopImg from "../assets/image/Webshop.png";
+import MyLibraryImg from "../assets/image/MyLibrary.png";
+import TicketingMobileAppImg from "../assets/image/Ticketing-MobileApp.png";
+import WeatherDetectorImg from "../assets/image/WeatherDetector.png";
+import UnityImg from "../assets/image/UNITY.png";
+import DicodingImg from "../assets/image/Dicoding.png";
 
 // Threads background component
 const vertexShader = `
@@ -402,8 +413,52 @@ const SkillItem = ({ icon, label }) => {
 };
 
 export default function About() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImg, setModalImg] = useState(null);
+
+  const openModal = (img) => {
+    setModalImg(img);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalImg(null);
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-between px-4 relative overflow-hidden" style={{ background: "#000" }}>
+      {/* Modal Sertifikat */}
+      {modalOpen && (
+        <>
+          {/* Overlay blur */}
+          <div className="fixed inset-0 z-40 backdrop-blur-[6px] bg-black/60 transition-all"></div>
+          {/* Modal Sertifikat */}
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center"
+            onClick={closeModal}
+          >
+            <div className="relative">
+              {/* Tombol X */}
+              <button
+                onClick={closeModal}
+                className="absolute -top-4 -right-4 bg-green-400 text-black rounded-full w-9 h-9 flex items-center justify-center shadow-lg hover:bg-green-500 transition z-10"
+                aria-label="Tutup"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <img
+                src={modalImg}
+                alt="Sertifikat"
+                className="max-w-full max-h-[90vh] rounded-2xl border-4 border-green-400 shadow-2xl bg-neutral-900"
+                onClick={e => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        </>
+      )}
       {/* Animated background */}
       <Squares
         direction="right"
@@ -480,7 +535,7 @@ export default function About() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/in/username"
+                href="https://linkedin.com/in/userhttps://www.linkedin.com/in/muhammad-haidar-7102ba341/name"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-400 hover:text-green-300 transition"
@@ -543,49 +598,49 @@ export default function About() {
           <div className="grid grid-cols-4 grid-rows-2 gap-10 w-full justify-items-center">
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#E44D26" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128"/><path fill="#F16529" d="M64 117.2l35.1-9.7 9.2-103.2H64"/><path fill="#EBEBEB" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z"/><path fill="#FFF" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z"/></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#E44D26" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128" /><path fill="#F16529" d="M64 117.2l35.1-9.7 9.2-103.2H64" /><path fill="#EBEBEB" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z" /><path fill="#FFF" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z" /></svg>
               }
               label="HTML"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#1572B6" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128"/><path fill="#33A9DC" d="M64 117.2l35.1-9.7 9.2-103.2H64"/><path fill="#fff" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z"/><path fill="#EBEBEB" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z"/></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#1572B6" d="M19.5 114.5L8.8 0h110.4l-10.7 114.5L63.9 128" /><path fill="#33A9DC" d="M64 117.2l35.1-9.7 9.2-103.2H64" /><path fill="#fff" d="M64 52.1H44.2l-1.3-14.7H64V23.1H28.7l.3 3.7 3.4 38.5H64zm0 37.2l-.1.1-16.2-4.4-1-11.2H32.9l2 22.4 29 8 .1-.1z" /><path fill="#EBEBEB" d="M63.9 52.1V37.4h18.6l1.3-14.3H63.9V8.2h35.2l-.3 3.7-3.4 38.5zm0 37.2v13.1l16.2-4.4 1-11.2h13.8l-2 22.4-29 8z" /></svg>
               }
               label="CSS"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#777BB4" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#777BB4" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z" /><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" /></svg>
               }
               label="PHP"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#F55247" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><path fill="#F55247" d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z" /><path fill="#fff" d="M64 24c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" /></svg>
               }
               label="Laravel"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><g fill="#61DAFB"><circle cx="64" cy="64" r="11.4"/><path d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z"/><ellipse cx="64" cy="64" rx="56" ry="22" fill="none" stroke="#61DAFB" strokeWidth="8"/><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(60 64 64)"/><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(120 64 64)"/></g></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><g fill="#61DAFB"><circle cx="64" cy="64" r="11.4" /><path d="M64 0C28.7 0 0 28.7 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64C128 28.7 99.3 0 64 0zm0 120c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z" /><ellipse cx="64" cy="64" rx="56" ry="22" fill="none" stroke="#61DAFB" strokeWidth="8" /><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(60 64 64)" /><ellipse cx="64" cy="64" rx="22" ry="56" fill="none" stroke="#61DAFB" strokeWidth="8" transform="rotate(120 64 64)" /></g></svg>
               }
               label="ReactJS"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><circle cx="64" cy="64" r="56" fill="#f5c518"/><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#222">Lu</text></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><circle cx="64" cy="64" r="56" fill="#f5c518" /><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#222">Lu</text></svg>
               }
               label="Lumen"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#38BDF8"/><path d="M32 96l32-64 32 64H32z" fill="#fff"/></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#38BDF8" /><path d="M32 96l32-64 32 64H32z" fill="#fff" /></svg>
               }
               label="Tailwind"
             />
             <SkillItem
               icon={
-                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#7952B3"/><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#fff">B</text></svg>
+                <svg viewBox="0 0 128 128" width="48" height="48"><rect width="128" height="128" rx="24" fill="#7952B3" /><text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="40" fill="#fff">B</text></svg>
               }
               label="Bootstrap"
             />
@@ -612,9 +667,8 @@ export default function About() {
                 <div className="w-1 h-20 bg-gradient-to-b from-green-400 to-transparent" />
               </div>
               <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
-                <h3 className="text-lg font-bold text-green-300 mb-1">SDN 1 Contoh</h3>
-                <p className="text-green-100 text-sm mb-1">2012 - 2018</p>
-                <p className="text-white text-base">Belajar dasar-dasar ilmu pengetahuan dan membangun karakter.</p>
+                <h3 className="text-lg font-bold text-green-300 mb-1">SDN Bendungan 1</h3>
+                <p className="text-green-100 text-sm mb-1">2015 - 2020</p>
               </div>
             </div>
             {/* SMP */}
@@ -624,9 +678,8 @@ export default function About() {
                 <div className="w-1 h-20 bg-gradient-to-b from-green-400 to-transparent" />
               </div>
               <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
-                <h3 className="text-lg font-bold text-green-300 mb-1">SMPN 2 Contoh</h3>
-                <p className="text-green-100 text-sm mb-1">2018 - 2021</p>
-                <p className="text-white text-base">Mengembangkan minat di bidang teknologi dan organisasi sekolah.</p>
+                <h3 className="text-lg font-bold text-green-300 mb-1">SMP PGRI 1 Ciawi</h3>
+                <p className="text-green-100 text-sm mb-1">2020 - 2023</p>
               </div>
             </div>
             {/* SMK */}
@@ -636,9 +689,8 @@ export default function About() {
                 {/* Tidak ada garis bawah untuk terakhir */}
               </div>
               <div className="bg-neutral-900/90 border border-green-400 rounded-xl shadow-lg px-8 py-6 flex-1 transition group-hover:scale-[1.03]">
-                <h3 className="text-lg font-bold text-green-300 mb-1">SMK Negeri 1 Contoh</h3>
-                <p className="text-green-100 text-sm mb-1">2021 - Sekarang</p>
-                <p className="text-white text-base">Fokus di Rekayasa Perangkat Lunak, aktif di project dan lomba IT.</p>
+                <h3 className="text-lg font-bold text-green-300 mb-1">SMK Wikrama Bogor</h3>
+                <p className="text-green-100 text-sm mb-1">2023 - 2026</p>
               </div>
             </div>
           </div>
@@ -656,48 +708,34 @@ export default function About() {
           <h2 className="text-green-400 text-2xl font-bold mb-10 text-center tracking-wide">
             Sertifikat
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Sertifikat Card 1 */}
             <motion.div
               whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
-              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
+              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition cursor-pointer"
+              onClick={() => openModal(DicodingImg)}
             >
               <img
-                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-                alt="Sertifikat 1"
+                src={DicodingImg}
+                alt="Sertifikat Dicoding"
                 className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
               />
-              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">React Developer</h3>
-              <p className="text-green-100 text-sm mb-2 text-center">Dicoding Indonesia</p>
-              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2024</span>
+              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">Dicoding</h3>
+              <p className="text-green-100 text-sm mb-2 text-center">Belajar Dasar Pemrograman Web</p>
             </motion.div>
             {/* Sertifikat Card 2 */}
             <motion.div
               whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
-              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
+              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition cursor-pointer"
+              onClick={() => openModal(UnityImg)}
             >
               <img
-                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80"
-                alt="Sertifikat 2"
+                src={UnityImg}
+                alt="Sertifikat Unity"
                 className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
               />
-              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">UI/UX Design</h3>
-              <p className="text-green-100 text-sm mb-2 text-center">Progate</p>
-              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2023</span>
-            </motion.div>
-            {/* Sertifikat Card 3 */}
-            <motion.div
-              whileHover={{ scale: 1.04, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
-              className="bg-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col items-center transition"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
-                alt="Sertifikat 3"
-                className="w-28 h-28 object-cover rounded-xl mb-4 border-2 border-green-400 shadow"
-              />
-              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">Web Fundamental</h3>
-              <p className="text-green-100 text-sm mb-2 text-center">FreeCodeCamp</p>
-              <span className="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded">2022</span>
+              <h3 className="text-lg font-bold text-green-300 mb-1 text-center">UNITY</h3>
+              <p className="text-green-100 text-sm mb-2 text-center">Unity Essentials Pathway </p>
             </motion.div>
           </div>
         </div>
@@ -715,27 +753,29 @@ export default function About() {
           <h2 className="text-green-400 text-2xl font-bold mb-10 text-center tracking-wide">
             Project
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Project Card 1 */}
             <motion.div
               whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
               className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
             >
               <img
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80"
-                alt="Project 1"
+                src={BahanBakarImg}
+                alt="Bahan Bakar"
                 className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
               />
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-green-300 mb-1">Portofolio Website</h3>
-                <p className="text-green-100 text-sm mb-2">Website portofolio interaktif dengan React dan Tailwind CSS.</p>
+                <h3 className="text-lg font-bold text-green-300 mb-1">Bahan Bakar</h3>
                 <a
-                  href="https://github.com/MuhammadHaidar1138"
+                  href="https://github.com/MuhammadHaidar1138/Bahan-Bakar" // ganti sesuai repo
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
                 >
-                  Lihat Project
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
                 </a>
               </div>
             </motion.div>
@@ -745,20 +785,186 @@ export default function About() {
               className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
             >
               <img
-                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
-                alt="Project 2"
+                src={DataSiswaImg}
+                alt="Data Siswa"
                 className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
               />
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-green-300 mb-1">Aplikasi Kasir</h3>
-                <p className="text-green-100 text-sm mb-2">Aplikasi kasir berbasis web dengan fitur laporan dan manajemen produk.</p>
+                <h3 className="text-lg font-bold text-green-300 mb-1">Data Siswa</h3>
                 <a
-                  href="https://github.com/MuhammadHaidar1138"
+                  href="https://github.com/MuhammadHaidar1138/Data-Siswa" // ganti sesuai repo
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
                 >
-                  Lihat Project
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z" />
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 3 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={KalkulatorImg}
+                alt="Kalkulator Sederhana"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Kalkulator Sederhana</h3>
+              </div>
+            </motion.div>
+            {/* Project Card 4 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={KasirImg}
+                alt="Kasir"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Kasir</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/Kasir" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 5 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={RentalMotorImg}
+                alt="Rental Motor"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Rental Motor</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/Rental-Motor" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 6 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={WebshopImg}
+                alt="Webshop"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Webshop</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/Haidar.Webshop" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 7 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={MyLibraryImg}
+                alt="MyLibrary"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">MyLibrary</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/MyLibrary-App" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 8 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={TicketingMobileAppImg}
+                alt="Ticketing Mobile App"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Ticketing Mobile App</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/Ticketing-MobileApp" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
+                </a>
+              </div>
+            </motion.div>
+            {/* Project Card 9 */}
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 8px 32px 0 rgba(34,197,94,0.25)" }}
+              className="bg-gradient-to-br from-green-900/60 to-neutral-900/90 border-2 border-green-400 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6 items-center transition"
+            >
+              <img
+                src={WeatherDetectorImg}
+                alt="Weather Detector"
+                className="w-32 h-32 object-cover rounded-xl border-2 border-green-400 shadow"
+              />
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-300 mb-1">Weather Detector</h3>
+                <a
+                  href="https://github.com/MuhammadHaidar1138/WeatherDetector-App" // ganti sesuai repo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 mt-2 text-green-400 hover:text-green-300 underline underline-offset-4 transition"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
+                  </svg>
+                  <span className="hidden md:inline">Repository</span>
                 </a>
               </div>
             </motion.div>
